@@ -2,6 +2,7 @@ package hellosign
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -181,13 +182,13 @@ func (m *Client) WithHTTPClient(httpClient *http.Client) *Client {
 }
 
 // CreateEmbeddedSignatureRequest creates a new embedded signature
-func (m *Client) createSignatureRequest(path string, request CreationRequest) (*SignatureRequest, error) {
+func (m *Client) createSignatureRequest(ctx context.Context, path string, request CreationRequest) (*SignatureRequest, error) {
 	params, writer, err := m.marshalMultipartRequest(request)
 	if err != nil {
 		return nil, err
 	}
 
-	response, err := m.post(path, params, *writer)
+	response, err := m.post(ctx, path, params, *writer)
 	if err != nil {
 		return nil, err
 	}
@@ -196,19 +197,19 @@ func (m *Client) createSignatureRequest(path string, request CreationRequest) (*
 }
 
 // CreateSignatureRequest creates non-embedded signature request.
-func (m *Client) CreateSignatureRequest(request CreationRequest) (*SignatureRequest, error) {
-	return m.createSignatureRequest("signature_request/send", request)
+func (m *Client) CreateSignatureRequest(ctx context.Context, request CreationRequest) (*SignatureRequest, error) {
+	return m.createSignatureRequest(ctx, "signature_request/send", request)
 }
 
 // CreateEmbeddedSignatureRequest creates a new embedded signature
-func (m *Client) CreateEmbeddedSignatureRequest(request CreationRequest) (*SignatureRequest, error) {
-	return m.createSignatureRequest("signature_request/create_embedded", request)
+func (m *Client) CreateEmbeddedSignatureRequest(ctx context.Context, request CreationRequest) (*SignatureRequest, error) {
+	return m.createSignatureRequest(ctx, "signature_request/create_embedded", request)
 }
 
 // GetSignatureRequest - Gets a SignatureRequest that includes the current status for each signer.
-func (m *Client) GetSignatureRequest(signatureRequestID string) (*SignatureRequest, error) {
+func (m *Client) GetSignatureRequest(ctx context.Context, signatureRequestID string) (*SignatureRequest, error) {
 	path := fmt.Sprintf("signature_request/%s", signatureRequestID)
-	response, err := m.get(path)
+	response, err := m.get(ctx, path)
 	if err != nil {
 		return nil, err
 	}
@@ -216,9 +217,9 @@ func (m *Client) GetSignatureRequest(signatureRequestID string) (*SignatureReque
 }
 
 // GetEmbeddedSignURL - Retrieves an embedded signing object.
-func (m *Client) GetEmbeddedSignURL(signatureRequestID string) (*SignURLResponse, error) {
+func (m *Client) GetEmbeddedSignURL(ctx context.Context, signatureRequestID string) (*SignURLResponse, error) {
 	path := fmt.Sprintf("embedded/sign_url/%s", signatureRequestID)
-	response, err := m.get(path)
+	response, err := m.get(ctx, path)
 	if err != nil {
 		return nil, err
 	}
@@ -232,8 +233,8 @@ func (m *Client) GetEmbeddedSignURL(signatureRequestID string) (*SignURLResponse
 	return data.Embedded, nil
 }
 
-func (m *Client) SaveFile(signatureRequestID, fileType, destFilePath string) (os.FileInfo, error) {
-	byteArray, err := m.GetFiles(signatureRequestID, fileType)
+func (m *Client) SaveFile(ctx context.Context, signatureRequestID, fileType, destFilePath string) (os.FileInfo, error) {
+	byteArray, err := m.GetFiles(ctx, signatureRequestID, fileType)
 
 	out, err := os.Create(destFilePath)
 	if err != nil {
@@ -250,14 +251,14 @@ func (m *Client) SaveFile(signatureRequestID, fileType, destFilePath string) (os
 }
 
 // GetPDF - Obtain a copy of the current pdf specified by the signature_request_id parameter.
-func (m *Client) GetPDF(signatureRequestID string) ([]byte, error) {
-	return m.GetFiles(signatureRequestID, "pdf")
+func (m *Client) GetPDF(ctx context.Context, signatureRequestID string) ([]byte, error) {
+	return m.GetFiles(ctx, signatureRequestID, "pdf")
 }
 
 // GetFiles - Obtain a copy of the current documents specified by the signature_request_id parameter.
 // signatureRequestID - The id of the SignatureRequest to retrieve.
 // fileType - Set to "pdf" for a single merged document or "zip" for a collection of individual documents.
-func (m *Client) GetFiles(signatureRequestID, fileType string) ([]byte, error) {
+func (m *Client) GetFiles(ctx context.Context, signatureRequestID, fileType string) ([]byte, error) {
 	path := fmt.Sprintf("signature_request/files/%s", signatureRequestID)
 
 	var params bytes.Buffer
@@ -275,7 +276,7 @@ func (m *Client) GetFiles(signatureRequestID, fileType string) ([]byte, error) {
 	}
 	emailField.Write([]byte("false"))
 
-	response, err := m.request("GET", path, &params, *writer)
+	response, err := m.request(ctx, "GET", path, &params, *writer)
 	if err != nil {
 		return nil, err
 	}
@@ -291,9 +292,9 @@ func (m *Client) GetFiles(signatureRequestID, fileType string) ([]byte, error) {
 }
 
 // ListSignatureRequests - Lists the SignatureRequests (both inbound and outbound) that you have access to.
-func (m *Client) ListSignatureRequests() (*ListResponse, error) {
+func (m *Client) ListSignatureRequests(ctx context.Context) (*ListResponse, error) {
 	path := fmt.Sprintf("signature_request/list")
-	response, err := m.get(path)
+	response, err := m.get(ctx, path)
 	if err != nil {
 		return nil, err
 	}
@@ -310,7 +311,7 @@ func (m *Client) ListSignatureRequests() (*ListResponse, error) {
 }
 
 // UpdateSignatureRequest - Update an email address on a signature request.
-func (m *Client) UpdateSignatureRequest(signatureRequestID string, signatureID string, email string) (*SignatureRequest, error) {
+func (m *Client) UpdateSignatureRequest(ctx context.Context, signatureRequestID string, signatureID string, email string) (*SignatureRequest, error) {
 	path := fmt.Sprintf("signature_request/update/%s", signatureRequestID)
 
 	var params bytes.Buffer
@@ -328,7 +329,7 @@ func (m *Client) UpdateSignatureRequest(signatureRequestID string, signatureID s
 	}
 	emailField.Write([]byte(email))
 
-	response, err := m.post(path, &params, *writer)
+	response, err := m.post(ctx, path, &params, *writer)
 	if err != nil {
 		return nil, err
 	}
@@ -337,10 +338,10 @@ func (m *Client) UpdateSignatureRequest(signatureRequestID string, signatureID s
 }
 
 // CancelSignatureRequest - Cancels an incomplete signature request. This action is not reversible.
-func (m *Client) CancelSignatureRequest(signatureRequestID string) (*http.Response, error) {
+func (m *Client) CancelSignatureRequest(ctx context.Context, signatureRequestID string) (*http.Response, error) {
 	path := fmt.Sprintf("signature_request/cancel/%s", signatureRequestID)
 
-	response, err := m.nakedPost(path)
+	response, err := m.nakedPost(ctx, path)
 	if err != nil {
 		return nil, err
 	}
@@ -349,10 +350,10 @@ func (m *Client) CancelSignatureRequest(signatureRequestID string) (*http.Respon
 }
 
 // SendSignatureRequest - Creates and sends a new SignatureRequest with the submitted documents.
-func (m *Client) SendSignatureRequest(request SignatureRequest) (*http.Response, error) {
+func (m *Client) SendSignatureRequest(ctx context.Context, request SignatureRequest) (*http.Response, error) {
 	path := fmt.Sprintf("signature_request/send")
 
-	response, err := m.nakedPost(path)
+	response, err := m.nakedPost(ctx, path)
 	if err != nil {
 		return nil, err
 	}
@@ -513,11 +514,11 @@ func (m *Client) marshalMultipartRequest(
 	return &b, w, nil
 }
 
-func (m *Client) get(path string) (*http.Response, error) {
+func (m *Client) get(ctx context.Context, path string) (*http.Response, error) {
 	endpoint := fmt.Sprintf("%s%s", m.getEndpoint(), path)
 
 	var b bytes.Buffer
-	request, _ := http.NewRequest("GET", endpoint, &b)
+	request, _ := http.NewRequestWithContext(ctx, "GET", endpoint, &b)
 	request.SetBasicAuth(m.APIKey, "")
 
 	response, err := m.getHTTPClient().Do(request)
@@ -528,13 +529,13 @@ func (m *Client) get(path string) (*http.Response, error) {
 	return response, err
 }
 
-func (m *Client) post(path string, params *bytes.Buffer, w multipart.Writer) (*http.Response, error) {
-	return m.request("POST", path, params, w)
+func (m *Client) post(ctx context.Context, path string, params *bytes.Buffer, w multipart.Writer) (*http.Response, error) {
+	return m.request(ctx, "POST", path, params, w)
 }
 
-func (m *Client) request(method string, path string, params *bytes.Buffer, w multipart.Writer) (*http.Response, error) {
+func (m *Client) request(ctx context.Context, method string, path string, params *bytes.Buffer, w multipart.Writer) (*http.Response, error) {
 	endpoint := fmt.Sprintf("%s%s", m.getEndpoint(), path)
-	request, _ := http.NewRequest(method, endpoint, params)
+	request, _ := http.NewRequestWithContext(ctx, method, endpoint, params)
 	request.Header.Add("Content-Type", w.FormDataContentType())
 	request.SetBasicAuth(m.APIKey, "")
 
@@ -563,10 +564,10 @@ func (m *Client) request(method string, path string, params *bytes.Buffer, w mul
 	return response, err
 }
 
-func (m *Client) nakedPost(path string) (*http.Response, error) {
+func (m *Client) nakedPost(ctx context.Context, path string) (*http.Response, error) {
 	endpoint := fmt.Sprintf("%s%s", m.getEndpoint(), path)
 	var b bytes.Buffer
-	request, _ := http.NewRequest("POST", endpoint, &b)
+	request, _ := http.NewRequestWithContext(ctx, "POST", endpoint, &b)
 	request.SetBasicAuth(m.APIKey, "")
 
 	response, err := m.getHTTPClient().Do(request)
