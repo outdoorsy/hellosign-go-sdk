@@ -1,6 +1,7 @@
 package hellosign
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +20,7 @@ func TestCreateEmbeddedSignatureRequestSuccess(t *testing.T) {
 	client := createVcrClient(vcr)
 
 	embReq := creationRequest()
-	res, err := client.CreateEmbeddedSignatureRequest(embReq)
+	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), embReq)
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -39,7 +40,7 @@ func TestCreateEmbeddedSignatureRequestSuccess2(t *testing.T) {
 	client := createVcrClient(vcr)
 
 	embReq := creationRequest()
-	res, err := client.CreateEmbeddedSignatureRequest(embReq)
+	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), embReq)
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -61,7 +62,7 @@ func TestCreateEmbeddedSignatureRequestMissingSigners(t *testing.T) {
 	embReq := creationRequest()
 	embReq.Signers = []Signer{}
 
-	res, err := client.CreateEmbeddedSignatureRequest(embReq)
+	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), embReq)
 
 	assert.Nil(t, res, "Should not return response")
 	assert.NotNil(t, err, "Should return error")
@@ -76,7 +77,7 @@ func TestCreateEmbeddedSignatureRequestWarnings(t *testing.T) {
 
 	embReq := creationRequest()
 
-	res, err := client.CreateEmbeddedSignatureRequest(embReq)
+	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), embReq)
 
 	assert.Nil(t, res, "Should not return response")
 	assert.NotNil(t, err, "Should return error")
@@ -105,7 +106,7 @@ func TestCreateEmbeddedSignatureRequestFileURL(t *testing.T) {
 		},
 	}
 
-	res, err := client.CreateEmbeddedSignatureRequest(request)
+	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), request)
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
@@ -122,7 +123,7 @@ func TestGetSignatureRequest(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	res, err := client.GetSignatureRequest("6d7ad140141a7fe6874fec55931c363e0301c353")
+	res, err := client.GetSignatureRequest(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353")
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -140,7 +141,7 @@ func TestGetSignatureRequests(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	res, err := client.ListSignatureRequests()
+	res, err := client.ListSignatureRequests(context.Background())
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -159,7 +160,7 @@ func TestGetEmbeddedSignURL(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	res, err := client.GetEmbeddedSignURL("deaf86bfb33764d9a215a07cc060122d")
+	res, err := client.GetEmbeddedSignURL(context.Background(), "deaf86bfb33764d9a215a07cc060122d")
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -174,7 +175,7 @@ func TestSaveFile(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	fileInfo, err := client.SaveFile("6d7ad140141a7fe6874fec55931c363e0301c353", "pdf", "/tmp/download.pdf")
+	fileInfo, err := client.SaveFile(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353", "pdf", "/tmp/download.pdf")
 
 	assert.NotNil(t, fileInfo, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -189,7 +190,7 @@ func TestGetPDF(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	data, err := client.GetPDF("6d7ad140141a7fe6874fec55931c363e0301c353")
+	data, err := client.GetPDF(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353")
 
 	assert.NotNil(t, data, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -203,7 +204,7 @@ func TestCancelSignatureRequests(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	res, err := client.CancelSignatureRequest("5c002b65dfefab79795a521bef312c45914cc48d")
+	res, err := client.CancelSignatureRequest(context.Background(), "5c002b65dfefab79795a521bef312c45914cc48d")
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
@@ -218,6 +219,7 @@ func TestUpdateSignatureRequestSuccess(t *testing.T) {
 	client := createVcrClient(vcr)
 
 	res, err := client.UpdateSignatureRequest(
+		context.Background(),
 		"9040be434b1301e31019b3dad895ed580f8ca890",
 		"deaf86bfb33764d9a215a07cc060122d",
 		"franky@hellosign.com",
@@ -237,6 +239,7 @@ func TestUpdateSignatureRequestFails(t *testing.T) {
 	client := createVcrClient(vcr)
 
 	res, err := client.UpdateSignatureRequest(
+		context.Background(),
 		"5c002b65dfefab79795a521bef312c45914cc48d",
 		"d82212e10dcf71ad465e033907074423",
 		"franky@hellosign.com",

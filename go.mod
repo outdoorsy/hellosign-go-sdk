@@ -1,4 +1,4 @@
-module github.com/jheth/hellosign-go-sdk
+module github.com/jheth/hellosign-go-sdk/v2
 
 go 1.14
 
