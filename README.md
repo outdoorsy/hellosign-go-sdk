@@ -1,5 +1,3 @@
-[![build status](https://travis-ci.org/jheth/hellosign-go-sdk.svg?branch=master)](https://travis-ci.org/jheth/hellosign-go-sdk)
-
 # HelloSign Go SDK
 A Go wrapper for the HelloSign API.
 
@@ -10,7 +8,7 @@ https://app.hellosign.com/api/reference
 ## Installation
 
 ```go
-go get github.com/jheth/hellosign-go-sdk
+go get github.com/outdoorsy/hellosign-go-sdk/v2
 ```
 ## Usage
 

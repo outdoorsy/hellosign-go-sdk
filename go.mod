@@ -1,4 +1,4 @@
-module github.com/jheth/hellosign-go-sdk/v2
+module github.com/outdoorsy/hellosign-go-sdk/v2
 
 go 1.20
 
