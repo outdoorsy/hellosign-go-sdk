@@ -1,43 +1,65 @@
 ---
-version: 1
-rwmutex: {}
+version: 2
 interactions:
-- request:
-    body: ""
-    form: {}
-    headers: {}
-    url: https://api.hellosign.com/v3/signature_request/cancel/5c002b65dfefab79795a521bef312c45914cc48d
-    method: POST
-  response:
-    body: ""
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Origin:
-      - '*'
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "0"
-      Content-Type:
-      - text/html; charset=utf-8
-      Date:
-      - Tue, 12 Sep 2017 20:29:13 GMT
-      P3p:
-      - CP="NOP3PPOLICY"
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=15768000
-      User-Agent:
-      - HelloSign API
-      X-Ratelimit-Limit:
-      - "2000"
-      X-Ratelimit-Limit-Remaining:
-      - "1998"
-      X-Ratelimit-Reset:
-      - "1505248153"
-    status: 200 OK
-    code: 200
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.hellosign.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://api.hellosign.com/v3/signature_request/cancel/d14084ca3136ab38d34623b13fb9839fdb6526e2
+        method: POST
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Access-Control-Allow-Headers:
+                - Authorization, Origin, X-Requested-With, Content-Type, Accept, Request-URL, Referrer-Policy, Referer, Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-Fetch-Site, User-Agent, X-User-Agent
+            Access-Control-Allow-Methods:
+                - GET, POST, OPTIONS, PUT, DELETE
+            Access-Control-Allow-Origin:
+                - '*'
+            Connection:
+                - keep-alive
+            Content-Length:
+                - "0"
+            Content-Type:
+                - text/html; charset=utf-8
+            Date:
+                - Tue, 30 May 2023 19:47:35 GMT
+            P3p:
+                - CP="NOP3PPOLICY"
+            Server:
+                - Apache
+            Set-Cookie:
+                - AWSALB=Ry4ZazE/Hu+LsHVesem7HTQZUJSlSdJOBe6uRAUy4wWEmTltrLXPp7R+X8Ca0IeJ6pVfAN2+eol1AMDNt7IO9u/WegZF1ltriZupi704nc//tqn7p9RhisxLWBZQ; Expires=Tue, 06 Jun 2023 19:47:35 GMT; Path=/
+                - AWSALBCORS=Ry4ZazE/Hu+LsHVesem7HTQZUJSlSdJOBe6uRAUy4wWEmTltrLXPp7R+X8Ca0IeJ6pVfAN2+eol1AMDNt7IO9u/WegZF1ltriZupi704nc//tqn7p9RhisxLWBZQ; Expires=Tue, 06 Jun 2023 19:47:35 GMT; Path=/; SameSite=None; Secure
+            Strict-Transport-Security:
+                - max-age=31536000
+            User-Agent:
+                - HelloSign API
+            Vary:
+                - Origin
+            X-Ratelimit-Limit:
+                - "100"
+            X-Ratelimit-Limit-Remaining:
+                - "99"
+            X-Ratelimit-Reset:
+                - "1685476055"
+        status: 200 OK
+        code: 200
+        duration: 286.882986ms

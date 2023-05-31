@@ -1,49 +1,63 @@
 ---
-version: 1
-rwmutex: {}
+version: 2
 interactions:
-- request:
-    body: ""
-    form: {}
-    headers: {}
-    url: https://api.hellosign.com/v3/signature_request/6d7ad140141a7fe6874fec55931c363e0301c353
-    method: GET
-  response:
-    body: '{"signature_request":{"signature_request_id":"6d7ad140141a7fe6874fec55931c363e0301c353","test_mode":true,"title":"cool
-      title","original_title":"awesome","subject":"awesome","message":"cool message
-      bro","metadata":{"no":"cats","more":"dogs"},"is_complete":false,"is_declined":false,"has_error":false,"custom_fields":[{"name":"display
-      name","type":"text","required":true,"api_id":"api_id","editor":null,"value":null},{"name":"display
-      name 2","type":"text","required":true,"api_id":"api_id_2","editor":null,"value":null}],"response_data":[],"signing_url":null,"signing_redirect_url":null,"final_copy_uri":"\/v3\/signature_request\/final_copy\/6d7ad140141a7fe6874fec55931c363e0301c353","files_url":"https:\/\/api.hellosign.com\/v3\/signature_request\/files\/6d7ad140141a7fe6874fec55931c363e0301c353","details_url":"https:\/\/app.hellosign.com\/home\/manage?guid=6d7ad140141a7fe6874fec55931c363e0301c353","requester_email_address":"joeheth@gmail.com","signatures":[{"signature_id":"5bac8d9534194cc4dba0ed2f87ded7f5","has_pin":false,"signer_email_address":"freddy@hellosign.com","signer_name":"Freddy
-      Rangel","order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null},{"signature_id":"c01212e447df08c12b5c8e6933c6f61d","has_pin":false,"signer_email_address":"frederick.rangel@gmail.com","signer_name":"Frederick
-      Rangel","order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null}],"cc_email_addresses":["no@cats.com","no@dogs.com"]}}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Origin:
-      - '*'
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 12 Sep 2017 19:40:11 GMT
-      P3p:
-      - CP="NOP3PPOLICY"
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=15768000
-      User-Agent:
-      - HelloSign API
-      Vary:
-      - Accept-Encoding
-      X-Ratelimit-Limit:
-      - "2000"
-      X-Ratelimit-Limit-Remaining:
-      - "1999"
-      X-Ratelimit-Reset:
-      - "1505245211"
-    status: 200 OK
-    code: 200
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: api.hellosign.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://api.hellosign.com/v3/signature_request/770e57f4c3480945ee850633daf903ed69b9eca9
+        method: GET
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"signature_request":{"signature_request_id":"770e57f4c3480945ee850633daf903ed69b9eca9","test_mode":true,"title":"cool title","original_title":"awesome","subject":"awesome","message":"cool message bro","metadata":{"no":"cats","more":"dogs"},"created_at":1685474804,"is_complete":false,"is_declined":false,"has_error":false,"custom_fields":[{"name":"display name","type":"text","required":true,"api_id":"api_id","editor":null,"value":null},{"name":"display name 2","type":"text","required":true,"api_id":"api_id_2","editor":null,"value":null}],"response_data":[],"signing_url":null,"signing_redirect_url":null,"final_copy_uri":"\/v3\/signature_request\/final_copy\/770e57f4c3480945ee850633daf903ed69b9eca9","files_url":"https:\/\/api.hellosign.com\/v3\/signature_request\/files\/770e57f4c3480945ee850633daf903ed69b9eca9","details_url":"https:\/\/app.hellosign.com\/home\/manage?guid=770e57f4c3480945ee850633daf903ed69b9eca9","requester_email_address":"sign@wheelbasepro.com","signatures":[{"signature_id":"ccad9f962bda67867707768459d00ed2","has_pin":false,"has_sms_auth":false,"has_sms_delivery":false,"sms_phone_number":null,"signer_email_address":"freddy@hellosign.com","signer_name":"Freddy Rangel","signer_role":null,"order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null},{"signature_id":"62ec80ed8b32b17da0f971fadfd212cd","has_pin":false,"has_sms_auth":false,"has_sms_delivery":false,"sms_phone_number":null,"signer_email_address":"frederick.rangel@gmail.com","signer_name":"Frederick Rangel","signer_role":null,"order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null}],"cc_email_addresses":["no@cats.com","no@dogs.com"],"template_ids":null,"client_id":"6b2d43473fdf7096960ce5bf0230fb80"}}'
+        headers:
+            Access-Control-Allow-Headers:
+                - Authorization, Origin, X-Requested-With, Content-Type, Accept, Request-URL, Referrer-Policy, Referer, Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-Fetch-Site, User-Agent, X-User-Agent
+            Access-Control-Allow-Methods:
+                - GET, POST, OPTIONS, PUT, DELETE
+            Access-Control-Allow-Origin:
+                - '*'
+            Connection:
+                - keep-alive
+            Content-Type:
+                - application/json
+            Date:
+                - Tue, 30 May 2023 19:31:34 GMT
+            P3p:
+                - CP="NOP3PPOLICY"
+            Server:
+                - Apache
+            Set-Cookie:
+                - AWSALB=R5BR1tuxpm4xSkbM9FV2P3KUr9TUSfQRlMGTM5UqpQc1UoMntwDsDJhWGMr32JPp7T8PxFiGTwtii+cru2DwoCJU+8plRAEF3p7gcoJIfJ2Hdya8RE8Yc3aaGWjA; Expires=Tue, 06 Jun 2023 19:31:31 GMT; Path=/
+                - AWSALBCORS=R5BR1tuxpm4xSkbM9FV2P3KUr9TUSfQRlMGTM5UqpQc1UoMntwDsDJhWGMr32JPp7T8PxFiGTwtii+cru2DwoCJU+8plRAEF3p7gcoJIfJ2Hdya8RE8Yc3aaGWjA; Expires=Tue, 06 Jun 2023 19:31:31 GMT; Path=/; SameSite=None; Secure
+            Strict-Transport-Security:
+                - max-age=31536000
+            User-Agent:
+                - HelloSign API
+            Vary:
+                - Origin,Accept-Encoding
+            X-Ratelimit-Limit:
+                - "100"
+            X-Ratelimit-Limit-Remaining:
+                - "98"
+            X-Ratelimit-Reset:
+                - "1685475091"
+        status: 200 OK
+        code: 200
+        duration: 2.713777665s

@@ -6,18 +6,16 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 293
+        content_length: 0
         transfer_encoding: []
         trailer: {}
         host: api.hellosign.com
         remote_addr: ""
         request_uri: ""
-        body: "--5d89923012c1ad3dd299e94dae7d2446b45139ca1d0ee1e068e5fc1de886\r\nContent-Disposition: form-data; name=\"signature_id\"\r\n\r\nd82212e10dcf71ad465e033907074423\r\n--5d89923012c1ad3dd299e94dae7d2446b45139ca1d0ee1e068e5fc1de886\r\nContent-Disposition: form-data; name=\"email_address\"\r\n\r\nfranky@hellosign.com"
+        body: ""
         form: {}
-        headers:
-            Content-Type:
-                - multipart/form-data; boundary=5d89923012c1ad3dd299e94dae7d2446b45139ca1d0ee1e068e5fc1de886
-        url: https://api.hellosign.com/v3/signature_request/update/5c002b65dfefab79795a521bef312c45914cc48d
+        headers: {}
+        url: https://api.hellosign.com/v3/signature_request/remove/becc4e1182869bca15edb4ff494ab339bdd22652
         method: POST
       response:
         proto: HTTP/1.1
@@ -25,9 +23,9 @@ interactions:
         proto_minor: 1
         transfer_encoding: []
         trailer: {}
-        content_length: 79
+        content_length: 233
         uncompressed: false
-        body: '{"error":{"error_msg":"This resource has been deleted","error_name":"deleted"}}'
+        body: '{"error":{"error_msg":"Could not remove access to signature request because it has not been fully executed. To cancel an incomplete signature request, use \/signature_request\/cancel.","error_name":"signature_request_remove_failed"}}'
         headers:
             Access-Control-Allow-Headers:
                 - Authorization, Origin, X-Requested-With, Content-Type, Accept, Request-URL, Referrer-Policy, Referer, Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-Fetch-Site, User-Agent, X-User-Agent
@@ -38,18 +36,18 @@ interactions:
             Connection:
                 - keep-alive
             Content-Length:
-                - "79"
+                - "233"
             Content-Type:
                 - application/json
             Date:
-                - Tue, 30 May 2023 19:50:01 GMT
+                - Wed, 31 May 2023 17:01:19 GMT
             P3p:
                 - CP="NOP3PPOLICY"
             Server:
                 - Apache
             Set-Cookie:
-                - AWSALB=9Un+0m8z9ca9Y4KzTcMh42cU6gvIiwSQkHrtz5WVkjIka/jUn5sG3EchocrpRySpQxSURmfLCjQNX0hNsZaANZX5bHtZB2utkkX2oIXA6W98lQt7PL4lflJcT7rk; Expires=Tue, 06 Jun 2023 19:50:01 GMT; Path=/
-                - AWSALBCORS=9Un+0m8z9ca9Y4KzTcMh42cU6gvIiwSQkHrtz5WVkjIka/jUn5sG3EchocrpRySpQxSURmfLCjQNX0hNsZaANZX5bHtZB2utkkX2oIXA6W98lQt7PL4lflJcT7rk; Expires=Tue, 06 Jun 2023 19:50:01 GMT; Path=/; SameSite=None; Secure
+                - AWSALB=3WCaurULOLXLnI17c1eaYQ6QgQiC0xCCxMN1V0pLyrIfpHkALRwzdfholw8OxVqoD7S5o5y3RQw86yzp78xIZpP0ndMiqQqTTHEyT6bDxKnC9q8OhRKhuuXGsxwp; Expires=Wed, 07 Jun 2023 17:01:19 GMT; Path=/
+                - AWSALBCORS=3WCaurULOLXLnI17c1eaYQ6QgQiC0xCCxMN1V0pLyrIfpHkALRwzdfholw8OxVqoD7S5o5y3RQw86yzp78xIZpP0ndMiqQqTTHEyT6bDxKnC9q8OhRKhuuXGsxwp; Expires=Wed, 07 Jun 2023 17:01:19 GMT; Path=/; SameSite=None; Secure
             Strict-Transport-Security:
                 - max-age=31536000
             User-Agent:
@@ -59,9 +57,9 @@ interactions:
             X-Ratelimit-Limit:
                 - "100"
             X-Ratelimit-Limit-Remaining:
-                - "98"
+                - "99"
             X-Ratelimit-Reset:
-                - "1685476201"
-        status: 410 Gone
-        code: 410
-        duration: 169.366231ms
+                - "1685552479"
+        status: 400 Bad Request
+        code: 400
+        duration: 626.310886ms

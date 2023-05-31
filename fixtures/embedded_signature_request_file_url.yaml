@@ -1,56 +1,65 @@
 ---
-version: 1
-rwmutex: {}
+version: 2
 interactions:
-- request:
-    body: "--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"test_mode\"\r\n\r\n1\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"client_id\"\r\n\r\n6b2d43473fdf7096960ce5bf0230fb80\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"file_url[0]\"\r\n\r\nhttp://www.pdf995.com/samples/pdf.pdf\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"title\"\r\n\r\nMy First Document\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"subject\"\r\n\r\nContract\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"signers[0][email_address]\"\r\n\r\njane@example.com\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"signers[0][name]\"\r\n\r\nJane Doe\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"use_text_tags\"\r\n\r\n0\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8\r\nContent-Disposition:
-      form-data; name=\"hide_text_tags\"\r\n\r\n0\r\n--c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8--\r\n"
-    form: {}
-    headers:
-      Content-Type:
-      - multipart/form-data; boundary=c9eba067d628877e0430d161e32a71be03d82fb0e4cf139718bdc30a48f8
-    url: https://api.hellosign.com/v3/signature_request/create_embedded
-    method: POST
-  response:
-    body: '{"signature_request":{"signature_request_id":"c9af885443fad587aa2a4698086c08c64233df64","test_mode":true,"title":"My
-      First Document","original_title":"Contract","subject":"Contract","message":null,"metadata":{},"is_complete":false,"is_declined":false,"has_error":false,"custom_fields":[],"response_data":[],"signing_url":null,"signing_redirect_url":null,"final_copy_uri":"\/v3\/signature_request\/final_copy\/c9af885443fad587aa2a4698086c08c64233df64","files_url":"https:\/\/api.hellosign.com\/v3\/signature_request\/files\/c9af885443fad587aa2a4698086c08c64233df64","details_url":"https:\/\/app.hellosign.com\/home\/manage?guid=c9af885443fad587aa2a4698086c08c64233df64","requester_email_address":"joeheth@gmail.com","signatures":[{"signature_id":"164904cb1d642b0f48e0a5ac3124aac5","has_pin":false,"signer_email_address":"jane@example.com","signer_name":"Jane
-      Doe","order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null}],"cc_email_addresses":[]}}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept
-      Access-Control-Allow-Methods:
-      - GET, POST, OPTIONS
-      Access-Control-Allow-Origin:
-      - '*'
-      Connection:
-      - keep-alive
-      Content-Type:
-      - application/json
-      Date:
-      - Wed, 13 Sep 2017 00:41:31 GMT
-      P3p:
-      - CP="NOP3PPOLICY"
-      Server:
-      - Apache
-      Strict-Transport-Security:
-      - max-age=15768000
-      User-Agent:
-      - HelloSign API
-      Vary:
-      - Accept-Encoding
-      X-Ratelimit-Limit:
-      - "50"
-      X-Ratelimit-Limit-Remaining:
-      - "48"
-      X-Ratelimit-Reset:
-      - "1505263291"
-    status: 200 OK
-    code: 200
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 1524
+        transfer_encoding: []
+        trailer: {}
+        host: api.hellosign.com
+        remote_addr: ""
+        request_uri: ""
+        body: "--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"test_mode\"\r\n\r\n1\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"client_id\"\r\n\r\n6b2d43473fdf7096960ce5bf0230fb80\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"file_url[0]\"\r\n\r\nhttp://www.pdf995.com/samples/pdf.pdf\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"title\"\r\n\r\nMy First Document\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"subject\"\r\n\r\nContract\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"signers[0][email_address]\"\r\n\r\njane@example.com\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"signers[0][name]\"\r\n\r\nJane Doe\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"use_text_tags\"\r\n\r\n0\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"hide_text_tags\"\r\n\r\n0\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"allow_decline\"\r\n\r\n0\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988\r\nContent-Disposition: form-data; name=\"allow_reassign\"\r\n\r\n0\r\n--4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988--\r\n"
+        form: {}
+        headers:
+            Content-Type:
+                - multipart/form-data; boundary=4b510ba5a5511d37ae229c2710cd4b04204814f04df3a304056a87596988
+        url: https://api.hellosign.com/v3/signature_request/create_embedded
+        method: POST
+      response:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"signature_request":{"signature_request_id":"51ef2d13f9172c23a7d4a1b8bf83d0200ef12dbc","test_mode":true,"title":"My First Document","original_title":"Contract","subject":"Contract","message":null,"metadata":{},"created_at":1685475087,"is_complete":false,"is_declined":false,"has_error":false,"custom_fields":[],"response_data":[],"signing_url":null,"signing_redirect_url":null,"final_copy_uri":"\/v3\/signature_request\/final_copy\/51ef2d13f9172c23a7d4a1b8bf83d0200ef12dbc","files_url":"https:\/\/api.hellosign.com\/v3\/signature_request\/files\/51ef2d13f9172c23a7d4a1b8bf83d0200ef12dbc","details_url":"https:\/\/app.hellosign.com\/home\/manage?guid=51ef2d13f9172c23a7d4a1b8bf83d0200ef12dbc","requester_email_address":"sign@wheelbasepro.com","signatures":[{"signature_id":"d69288b273d0aa700a6a945cc1e09622","has_pin":false,"has_sms_auth":false,"has_sms_delivery":false,"sms_phone_number":null,"signer_email_address":"jane@example.com","signer_name":"Jane Doe","signer_role":null,"order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null,"error":null}],"cc_email_addresses":[],"template_ids":null,"client_id":"6b2d43473fdf7096960ce5bf0230fb80"}}'
+        headers:
+            Access-Control-Allow-Headers:
+                - Authorization, Origin, X-Requested-With, Content-Type, Accept, Request-URL, Referrer-Policy, Referer, Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-Fetch-Site, User-Agent, X-User-Agent
+            Access-Control-Allow-Methods:
+                - GET, POST, OPTIONS, PUT, DELETE
+            Access-Control-Allow-Origin:
+                - '*'
+            Connection:
+                - keep-alive
+            Content-Type:
+                - application/json
+            Date:
+                - Tue, 30 May 2023 19:31:28 GMT
+            P3p:
+                - CP="NOP3PPOLICY"
+            Server:
+                - Apache
+            Set-Cookie:
+                - AWSALB=oASicdU+GLDmWS2ryqfPO7lh3zwuWUG5R5DPvjWP3KuPyN1gjTHKaziZtethaRfJQuP77kfse762rPOGWTNygazboVcfXlXct1OyhdX0WTBtkZnNuSSUNUwCzLu/; Expires=Tue, 06 Jun 2023 19:31:25 GMT; Path=/
+                - AWSALBCORS=oASicdU+GLDmWS2ryqfPO7lh3zwuWUG5R5DPvjWP3KuPyN1gjTHKaziZtethaRfJQuP77kfse762rPOGWTNygazboVcfXlXct1OyhdX0WTBtkZnNuSSUNUwCzLu/; Expires=Tue, 06 Jun 2023 19:31:25 GMT; Path=/; SameSite=None; Secure
+            Strict-Transport-Security:
+                - max-age=31536000
+            User-Agent:
+                - HelloSign API
+            Vary:
+                - Origin,Accept-Encoding
+            X-Ratelimit-Limit:
+                - "10"
+            X-Ratelimit-Limit-Remaining:
+                - "9"
+            X-Ratelimit-Reset:
+                - "1685475085"
+        status: 200 OK
+        code: 200
+        duration: 3.240624264s

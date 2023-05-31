@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dnaeon/go-vcr/cassette"
-	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/dnaeon/go-vcr.v3/cassette"
+	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 )
 
 func TestCreateEmbeddedSignatureRequestSuccess(t *testing.T) {
@@ -25,7 +25,7 @@ func TestCreateEmbeddedSignatureRequestSuccess(t *testing.T) {
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
-	assert.Equal(t, "6d7ad140141a7fe6874fec55931c363e0301c353", res.SignatureRequestID)
+	assert.Equal(t, "770e57f4c3480945ee850633daf903ed69b9eca9", res.SignatureRequestID)
 	assert.Equal(t, "awesome", res.Subject)
 	assert.Equal(t, true, res.TestMode)
 	assert.Equal(t, false, res.IsComplete)
@@ -45,7 +45,7 @@ func TestCreateEmbeddedSignatureRequestSuccess2(t *testing.T) {
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
-	assert.Equal(t, "0afd5e3ac99a19a7e2aa68740faf9bd32441dc11", res.SignatureRequestID)
+	assert.Equal(t, "ea8e2061af75a2fc3a8c440420cee674481cec40", res.SignatureRequestID)
 	assert.Equal(t, "awesome", res.Subject)
 	assert.Equal(t, true, res.TestMode)
 	assert.Equal(t, false, res.IsComplete)
@@ -67,22 +67,24 @@ func TestCreateEmbeddedSignatureRequestMissingSigners(t *testing.T) {
 	assert.Nil(t, res, "Should not return response")
 	assert.NotNil(t, err, "Should return error")
 
-	assert.Equal(t, err.Error(), "bad_request: Must specify a name for each signer")
+	assert.Equal(t, err.Error(), "bad_request: Cannot specify form_fields_per_document unless you also specify signers")
 }
 func TestCreateEmbeddedSignatureRequestWarnings(t *testing.T) {
 	// Start our recorder
 	vcr := fixture("fixtures/embedded_signature_request_warnings")
+	defer vcr.Stop() // Make sure recorder is stopped once done with it
 
 	client := createVcrClient(vcr)
 
 	embReq := creationRequest()
-
+	embReq.Signers = []Signer{}
+	embReq.FormFieldsPerDocument = [][]DocumentFormField{}
 	res, err := client.CreateEmbeddedSignatureRequest(context.Background(), embReq)
 
 	assert.Nil(t, res, "Should not return response")
 	assert.NotNil(t, err, "Should return error")
 
-	assert.Equal(t, err.Error(), "parameter_missing: field is missing, empty_value: oops")
+	assert.Equal(t, err.Error(), "bad_request: Must specify a name for each signer")
 }
 
 func TestCreateEmbeddedSignatureRequestFileURL(t *testing.T) {
@@ -110,7 +112,7 @@ func TestCreateEmbeddedSignatureRequestFileURL(t *testing.T) {
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
-	assert.Equal(t, "c9af885443fad587aa2a4698086c08c64233df64", res.SignatureRequestID)
+	assert.Equal(t, "51ef2d13f9172c23a7d4a1b8bf83d0200ef12dbc", res.SignatureRequestID)
 	assert.Equal(t, "My First Document", res.Title)
 	assert.Equal(t, true, res.TestMode)
 	assert.Equal(t, false, res.IsComplete)
@@ -123,19 +125,19 @@ func TestGetSignatureRequest(t *testing.T) {
 
 	client := createVcrClient(vcr)
 
-	res, err := client.GetSignatureRequest(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353")
+	res, err := client.GetSignatureRequest(context.Background(), "770e57f4c3480945ee850633daf903ed69b9eca9")
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
-	assert.Equal(t, "6d7ad140141a7fe6874fec55931c363e0301c353", res.SignatureRequestID)
+	assert.Equal(t, "770e57f4c3480945ee850633daf903ed69b9eca9", res.SignatureRequestID)
 	assert.Equal(t, "awesome", res.Subject)
 	assert.Equal(t, true, res.TestMode)
 	assert.Equal(t, false, res.IsComplete)
 	assert.Equal(t, false, res.IsDeclined)
 }
 
-func TestGetSignatureRequests(t *testing.T) {
+func TestListSignatureRequests(t *testing.T) {
 	vcr := fixture("fixtures/list_signature_requests")
 	defer vcr.Stop() // Make sure recorder is stopped once done with it
 
@@ -146,12 +148,12 @@ func TestGetSignatureRequests(t *testing.T) {
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
-	assert.Equal(t, 1, res.ListInfo.NumPages)
+	assert.Equal(t, 9937, res.ListInfo.NumPages)
 	assert.Equal(t, 1, res.ListInfo.Page)
-	assert.Equal(t, 19, res.ListInfo.NumResults)
+	assert.Equal(t, 198731, res.ListInfo.NumResults)
 	assert.Equal(t, 20, res.ListInfo.PageSize)
 
-	assert.Equal(t, 19, len(res.SignatureRequests))
+	assert.Equal(t, 20, len(res.SignatureRequests))
 }
 
 func TestGetEmbeddedSignURL(t *testing.T) {
@@ -166,7 +168,7 @@ func TestGetEmbeddedSignURL(t *testing.T) {
 	assert.Nil(t, err, "Should not return error")
 
 	assert.Contains(t, res.SignURL, "embeddedSign?signature_id=deaf86bfb33764d9a215a07cc060122d&token=")
-	assert.Equal(t, 1505259198, res.ExpiresAt)
+	assert.Equal(t, 1685479225, res.ExpiresAt)
 }
 
 func TestSaveFile(t *testing.T) {
@@ -198,18 +200,81 @@ func TestGetPDF(t *testing.T) {
 	assert.Equal(t, 98781, len(data))
 }
 
+func TestGetFilesAsDataURI(t *testing.T) {
+	vcr := fixture("fixtures/get_files_as_data_uri")
+	defer vcr.Stop() // Make sure recorder is stopped once done with it
+
+	client := createVcrClient(vcr)
+
+	response, err := client.GetFilesAsDataURI(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353")
+
+	assert.NotNil(t, response, "Should return response")
+	assert.Nil(t, err, "Should not return error")
+
+	assert.Equal(t, 131737, len(response.DataUri))
+}
+
+func TestGetFilesAsFileURL(t *testing.T) {
+	vcr := fixture("fixtures/get_files_as_file_url")
+	defer vcr.Stop() // Make sure recorder is stopped once done with it
+
+	client := createVcrClient(vcr)
+
+	response, err := client.GetFilesAsFileURL(context.Background(), "6d7ad140141a7fe6874fec55931c363e0301c353")
+
+	assert.NotNil(t, response, "Should return response")
+	assert.Nil(t, err, "Should not return error")
+
+	assert.Contains(t, response.FileUrl, "https://s3.amazonaws.com/hellofax_uploads/super_groups/2017/09/12/6d7ad140141a7fe6874fec55931c363e0301c353/merged-initial.pdf")
+	assert.Equal(t, 1685810514, response.ExpiresAt)
+}
+
+func TestCreateSignatureRequestSuccess(t *testing.T) {
+	// Start our recorder
+	vcr := fixture("fixtures/create_signature_request")
+	defer vcr.Stop() // Make sure recorder is stopped once done with it
+
+	client := createVcrClient(vcr)
+
+	embReq := creationRequest()
+	res, err := client.CreateSignatureRequest(context.Background(), embReq)
+
+	assert.NotNil(t, res, "Should return response")
+	assert.Nil(t, err, "Should not return error")
+
+	assert.Equal(t, "4326c7f17970b98aefef0bffc8b692c11244c256", res.SignatureRequestID)
+	assert.Equal(t, "awesome", res.Subject)
+	assert.Equal(t, true, res.TestMode)
+	assert.Equal(t, false, res.IsComplete)
+	assert.Equal(t, false, res.IsDeclined)
+}
+
 func TestCancelSignatureRequests(t *testing.T) {
 	vcr := fixture("fixtures/cancel_signature_request")
 	defer vcr.Stop() // Make sure recorder is stopped once done with it
 
 	client := createVcrClient(vcr)
 
-	res, err := client.CancelSignatureRequest(context.Background(), "5c002b65dfefab79795a521bef312c45914cc48d")
+	res, err := client.CancelSignatureRequest(context.Background(), "d14084ca3136ab38d34623b13fb9839fdb6526e2")
 
 	assert.NotNil(t, res, "Should return response")
 	assert.Nil(t, err, "Should not return error")
 
 	assert.Equal(t, 200, res.StatusCode)
+}
+
+func TestRemoveSignatureRequestsAccess(t *testing.T) {
+	vcr := fixture("fixtures/remove_signature_request_access")
+	defer vcr.Stop() // Make sure recorder is stopped once done with it
+
+	client := createVcrClient(vcr)
+
+	res, err := client.RemoveSignatureRequestAccess(context.Background(), "becc4e1182869bca15edb4ff494ab339bdd22652")
+
+	assert.NotNil(t, res, "Should return response")
+	assert.Nil(t, err, "Should not return error")
+
+	assert.Equal(t, 400, res.StatusCode)
 }
 
 func TestUpdateSignatureRequestSuccess(t *testing.T) {
@@ -222,14 +287,14 @@ func TestUpdateSignatureRequestSuccess(t *testing.T) {
 		context.Background(),
 		"9040be434b1301e31019b3dad895ed580f8ca890",
 		"deaf86bfb33764d9a215a07cc060122d",
-		"franky@hellosign.com",
+		"franky1@hellosign.com",
 	)
 
 	assert.Nil(t, err, "Should not return error")
 	assert.NotNil(t, res, "Should return response")
 
 	assert.Equal(t, "9040be434b1301e31019b3dad895ed580f8ca890", res.SignatureRequestID)
-	assert.Equal(t, "franky@hellosign.com", res.Signatures[0].SignerEmailAddress)
+	assert.Equal(t, "franky1@hellosign.com", res.Signatures[0].SignerEmailAddress)
 }
 
 func TestUpdateSignatureRequestFails(t *testing.T) {
@@ -273,11 +338,12 @@ func fixture(path string) *recorder.Recorder {
 		log.Fatal(err)
 	}
 
-	// Add a filter which removes Authorization headers from all requests:
-	vcr.AddFilter(func(i *cassette.Interaction) error {
+	// Add a hook which removes Authorization headers from all requests
+	hook := func(i *cassette.Interaction) error {
 		delete(i.Request.Headers, "Authorization")
 		return nil
-	})
+	}
+	vcr.AddHook(hook, recorder.AfterCaptureHook)
 
 	return vcr
 }

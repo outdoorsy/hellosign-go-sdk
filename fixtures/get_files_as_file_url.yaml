@@ -14,8 +14,10 @@ interactions:
         request_uri: ""
         body: ""
         form: {}
-        headers: {}
-        url: https://api.hellosign.com/v3/embedded/sign_url/deaf86bfb33764d9a215a07cc060122d
+        headers:
+            Content-Type:
+                - multipart/form-data; boundary=c2403cb27990ecfd770ce09fb500627ce06e4bd741350a9ec402eab176d6
+        url: https://api.hellosign.com/v3/signature_request/files_as_file_url/6d7ad140141a7fe6874fec55931c363e0301c353
         method: GET
       response:
         proto: HTTP/1.1
@@ -25,7 +27,7 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"embedded":{"sign_url":"https:\/\/app.hellosign.com\/editor\/embeddedSign?signature_id=deaf86bfb33764d9a215a07cc060122d&token=cf725e6c061ac8b0d65eb1ffe5e992c7","expires_at":1685479225}}'
+        body: '{"file_url":"https:\/\/s3.amazonaws.com\/hellofax_uploads\/super_groups\/2017\/09\/12\/6d7ad140141a7fe6874fec55931c363e0301c353\/merged-initial.pdf?response-content-disposition=attachment&response-content-type=application%2Fbinary&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAUMSXJYX53PEKO3SX%2F20230531%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230531T164154Z&X-Amz-SignedHeaders=host&X-Amz-Expires=259200&X-Amz-Signature=f3c15d5e325a4f0c054974cee6aff2b466918975dad82b7fb5fc336d0fa1a72e","expires_at":1685810514}'
         headers:
             Access-Control-Allow-Headers:
                 - Authorization, Origin, X-Requested-With, Content-Type, Accept, Request-URL, Referrer-Policy, Referer, Sec-CH-UA, Sec-CH-UA-Mobile, Sec-CH-UA-Platform, Sec-Fetch-Site, User-Agent, X-User-Agent
@@ -38,14 +40,14 @@ interactions:
             Content-Type:
                 - application/json
             Date:
-                - Tue, 30 May 2023 19:40:25 GMT
+                - Wed, 31 May 2023 16:41:54 GMT
             P3p:
                 - CP="NOP3PPOLICY"
             Server:
                 - Apache
             Set-Cookie:
-                - AWSALB=IuJi0NBkicgSDXHWjTFmevRZ0qtwUcc1io9yO4Y0Q5cAgXGY1xNR3FlBgIPjThvw6UijeTa16wjxEcoR5Mhk2VnkAprifOBbLMZ6ZAX2TNvLxaRHP0D22VNDVOQP; Expires=Tue, 06 Jun 2023 19:40:24 GMT; Path=/
-                - AWSALBCORS=IuJi0NBkicgSDXHWjTFmevRZ0qtwUcc1io9yO4Y0Q5cAgXGY1xNR3FlBgIPjThvw6UijeTa16wjxEcoR5Mhk2VnkAprifOBbLMZ6ZAX2TNvLxaRHP0D22VNDVOQP; Expires=Tue, 06 Jun 2023 19:40:24 GMT; Path=/; SameSite=None; Secure
+                - AWSALB=TVLOHkkcxMOtF4jY42O1/o7E3xYYxI7K1GTZj++IVpU2/SweM5VvPICfsMWqmv9MYdTbY0d2HkDXopcnn3bjqfv27Iity5p1BVzeiCkby98yPduk+8g0Pda3UmHZ; Expires=Wed, 07 Jun 2023 16:41:54 GMT; Path=/
+                - AWSALBCORS=TVLOHkkcxMOtF4jY42O1/o7E3xYYxI7K1GTZj++IVpU2/SweM5VvPICfsMWqmv9MYdTbY0d2HkDXopcnn3bjqfv27Iity5p1BVzeiCkby98yPduk+8g0Pda3UmHZ; Expires=Wed, 07 Jun 2023 16:41:54 GMT; Path=/; SameSite=None; Secure
             Strict-Transport-Security:
                 - max-age=31536000
             User-Agent:
@@ -57,7 +59,7 @@ interactions:
             X-Ratelimit-Limit-Remaining:
                 - "98"
             X-Ratelimit-Reset:
-                - "1685475625"
+                - "1685551314"
         status: 200 OK
         code: 200
-        duration: 450.792963ms
+        duration: 273.868757ms

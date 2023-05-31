@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -156,6 +155,15 @@ type ListInfo struct {
 	PageSize   int `json:"page_size"`   // Objects returned per page
 }
 
+type DataUriResponse struct {
+	DataUri string `json:"data_uri"`
+}
+
+type FileResponse struct {
+	FileUrl   string `json:"file_url"`
+	ExpiresAt int    `json:"expires_at"`
+}
+
 type ErrorResponse struct {
 	Error    *Error    `json:"error"`
 	Warnings []Warning `json:"warnings"`
@@ -283,12 +291,60 @@ func (m *Client) GetFiles(ctx context.Context, signatureRequestID, fileType stri
 
 	defer response.Body.Close()
 
-	data, err := ioutil.ReadAll(response.Body)
+	data, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
 
 	return data, nil
+}
+
+// GetFilesAsDataURI - Obtain a copy of the current documents specified by the signature_request_id parameter.
+// Returns a JSON object with a data_uri representing the base64 encoded file (PDFs only).
+func (m *Client) GetFilesAsDataURI(ctx context.Context, signatureRequestID string) (DataUriResponse, error) {
+	path := fmt.Sprintf("signature_request/files_as_data_uri/%s", signatureRequestID)
+
+	var params bytes.Buffer
+	writer := multipart.NewWriter(&params)
+
+	response, err := m.request(ctx, "GET", path, &params, *writer)
+	if err != nil {
+		return DataUriResponse{}, err
+	}
+
+	defer response.Body.Close()
+
+	dataResponse := DataUriResponse{}
+	err = json.NewDecoder(response.Body).Decode(&dataResponse)
+	if err != nil {
+		return DataUriResponse{}, err
+	}
+
+	return dataResponse, err
+}
+
+// GetFilesAsFileURL - Obtain a copy of the current documents specified by the signature_request_id parameter.
+// Returns a JSON object with a url to the file (PDFs only).
+func (m *Client) GetFilesAsFileURL(ctx context.Context, signatureRequestID string) (FileResponse, error) {
+	path := fmt.Sprintf("signature_request/files_as_file_url/%s", signatureRequestID)
+
+	var params bytes.Buffer
+	writer := multipart.NewWriter(&params)
+
+	response, err := m.request(ctx, "GET", path, &params, *writer)
+	if err != nil {
+		return FileResponse{}, err
+	}
+
+	defer response.Body.Close()
+
+	fileResponse := FileResponse{}
+	err = json.NewDecoder(response.Body).Decode(&fileResponse)
+	if err != nil {
+		return FileResponse{}, err
+	}
+
+	return fileResponse, err
 }
 
 // ListSignatureRequests - Lists the SignatureRequests (both inbound and outbound) that you have access to.
@@ -349,9 +405,9 @@ func (m *Client) CancelSignatureRequest(ctx context.Context, signatureRequestID 
 	return response, err
 }
 
-// SendSignatureRequest - Creates and sends a new SignatureRequest with the submitted documents.
-func (m *Client) SendSignatureRequest(ctx context.Context, request SignatureRequest) (*http.Response, error) {
-	path := fmt.Sprintf("signature_request/send")
+// RemoveSignatureRequestAccess - Removes your access to a completed signature request.
+func (m *Client) RemoveSignatureRequestAccess(ctx context.Context, signatureRequestID string) (*http.Response, error) {
+	path := fmt.Sprintf("signature_request/remove/%s", signatureRequestID)
 
 	response, err := m.nakedPost(ctx, path)
 	if err != nil {

@@ -1,9 +1,9 @@
 language: go
 
 go:
-  - 1.17.x
-  - 1.18.x
+  - 1.19.x
+  - 1.20.x
 
 install:
-  - go get github.com/dnaeon/go-vcr/recorder
+  - go get gopkg.in/dnaeon/go-vcr.v3/recorder
   - go get github.com/stretchr/testify/assert
